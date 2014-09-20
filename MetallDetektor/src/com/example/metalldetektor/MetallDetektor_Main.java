@@ -2,6 +2,7 @@ package com.example.metalldetektor;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +14,9 @@ public class MetallDetektor_Main extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_metall_detektor_main);
+        //Prüfen ob Sensor vorhanden ist
+        //SensorManager sm = SensorManager getSystemservice(Context.SENSOR_SERVICE);
+        		
     }
 
 
