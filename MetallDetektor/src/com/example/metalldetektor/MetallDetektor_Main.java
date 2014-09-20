@@ -6,6 +6,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 public class MetallDetektor_Main extends Activity {
@@ -15,10 +17,17 @@ public class MetallDetektor_Main extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_metall_detektor_main);
         //Prüfen ob Sensor vorhanden ist
-        //SensorManager sm = SensorManager getSystemservice(Context.SENSOR_SERVICE);
-        		
-    }
+        
 
+        final Button btnStart = (Button) findViewById(R.id.btnStart);
+        final Button btnStop = (Button) findViewById(R.id.btnStop);
+        
+        btnStart.setOnClickListener(new View.OnClickListener() {
+        public void onClick(View v) {
+        	btnStop.setEnabled(true);
+    		}
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
