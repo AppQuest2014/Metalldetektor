@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 
 public class MetallDetektor_Main extends Activity {
@@ -21,10 +22,21 @@ public class MetallDetektor_Main extends Activity {
 
         final Button btnStart = (Button) findViewById(R.id.btnStart);
         final Button btnStop = (Button) findViewById(R.id.btnStop);
-        
+        final ProgressBar progressBar1 = (ProgressBar) findViewById(R.id.progressBar1);
+
         btnStart.setOnClickListener(new View.OnClickListener() {
         public void onClick(View v) {
         	btnStop.setEnabled(true);
+        	btnStart.setEnabled(false);
+        	progressBar1.setVisibility(1);
+    		}
+        });
+        
+        btnStop.setOnClickListener(new View.OnClickListener() {
+        public void onClick(View v) {
+        	btnStop.setEnabled(false);
+        	btnStart.setEnabled(true);
+        	progressBar1.setVisibility(0);
     		}
         });
     }
