@@ -1,34 +1,59 @@
 package com.example.metalldetektor;
 
 
+import org.w3c.dom.Text;
+
 import android.app.Activity;
 import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.FloatMath;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 
-public class MetallDetektor_Main extends Activity {
+public class MetallDetektor_Main extends Activity implements SensorEventListener {
 
+	String TAG = "FPT Lehrlinge";
+	Sensor sensor_magnet = null;
+	ProgressBar progressBar1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_metall_detektor_main);
-        //Prüfen ob Sensor vorhanden ist
         
-
         final Button btnStart = (Button) findViewById(R.id.btnStart);
         final Button btnStop = (Button) findViewById(R.id.btnStop);
-        final ProgressBar progressBar1 = (ProgressBar) findViewById(R.id.progressBar1);
+        progressBar1 = (ProgressBar) findViewById(R.id.progressBar1);
+        final TextView msgError = (TextView) findViewById(R.id.msgError);
+        
+        
+        SensorManager sm = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+        sensor_magnet = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        sm.registerListener(this, sensor_magnet, SensorManager.SENSOR_DELAY_NORMAL);
+//        if(sensor_magnet == null) {
+//        	msgError.setText("Sensor existiert nicht!");
+//        }
+//        else {
+//        	msgError.setText("Sensor existiert!");
+//        }
+        
+        
 
         btnStart.setOnClickListener(new View.OnClickListener() {
         public void onClick(View v) {
         	btnStop.setEnabled(true);
         	btnStart.setEnabled(false);
-        	progressBar1.setVisibility(1);
+        	progressBar1.setVisibility(View.VISIBLE);
+        	
     		}
         });
         
@@ -36,9 +61,18 @@ public class MetallDetektor_Main extends Activity {
         public void onClick(View v) {
         	btnStop.setEnabled(false);
         	btnStart.setEnabled(true);
-        	progressBar1.setVisibility(0);
+        	progressBar1.setVisibility(View.INVISIBLE);
     		}
         });
+    }
+    
+    public void onSensorChanged(SensorEvent event) {
+    	if(event.sensor == sensor_magnet) {
+    		float[] mag = event.values;
+    		double betrag = FloatMath.sqrt(mag[0] + mag[1] * mag[1] + mag[2] * mag[2]);
+    		progressBar1.setProgress((int) betrag);
+    		Log.w(TAG, Double.toString(betrag));
+    	}
     }
 
     @Override
@@ -59,4 +93,10 @@ public class MetallDetektor_Main extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// TODO Auto-generated method stub
+		
+	}
 }

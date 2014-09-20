@@ -50,4 +50,13 @@
         android:layout_marginTop="74dp"
         android:visibility="invisible" />
 
+    <TextView
+        android:id="@+id/msgError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnStop"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
 </RelativeLayout>
